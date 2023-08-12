@@ -2,12 +2,15 @@ import { messages } from "./messages";
 import colors from "colors";
 import { Configuration, OpenAIApi } from "openai";
 
-const openAi = new OpenAIApi(
-  new Configuration({
-    basePath: "https://api.chatanywhere.cn/v1",
-    apiKey: process.env.OPEN_API_KEY,
-  })
-);
+let openAi: OpenAIApi;
+export function initBot() {
+  openAi = new OpenAIApi(
+    new Configuration({
+      basePath: "https://api.chatanywhere.cn/v1",
+      apiKey: process.env.OPEN_API_KEY,
+    })
+  );
+}
 
 export async function botAnswer() {
   const chatCompletion = await openAi.createChatCompletion({

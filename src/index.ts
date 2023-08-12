@@ -1,14 +1,16 @@
 import dotenv from "dotenv";
 import { askQuestion } from "./user";
-import {botAnswer} from './bot'
+import { botAnswer, initBot } from "./bot";
 dotenv.config();
+
+initBot();
 
 (async () => {
   try {
     while (true) {
       const userInput = askQuestion();
       checkExit(userInput);
-      botAnswer()
+      await botAnswer();
     }
   } catch (error) {
     console.log("error :>> ", error);
