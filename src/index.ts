@@ -1,24 +1,27 @@
 import dotenv from "dotenv";
-import { askQuestion } from "./user";
-import { botAnswer, initBot } from "./bot";
-dotenv.config();
+import { askQuestion } from "./user.js";
+import { botAnswer, initBot } from "./bot.js";
+import { startLoading, stopLoading } from "./loading.js";
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
+
+dotenv.config({
+  path: resolve(dirname(fileURLToPath(import.meta.url)), "../.env"),
+});
 
 initBot();
 
-(async () => {
-  try {
-    while (true) {
-      const userInput = askQuestion();
-      checkExit(userInput);
-      await botAnswer();
-    }
-  } catch (error) {
-    console.log("error :>> ", error);
-  }
-})();
+// main
+while (true) {
+  const userInput = askQuestion();
+  checkExit(userInput);
+  startLoading();
+  await botAnswer();
+  stopLoading();
+}
 
 function checkExit(input: string) {
-  if (input.toLocaleLowerCase() === "exit") {
+  if (input === "exit") {
     process.exit();
   }
 }

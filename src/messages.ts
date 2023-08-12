@@ -6,3 +6,10 @@ export function addUserMessage(message: string) {
     content: message,
   });
 }
+
+export function addBotMessage(message: string) {
+  messages.push({
+    role: "assistant",
+    content: message,
+  });
+}

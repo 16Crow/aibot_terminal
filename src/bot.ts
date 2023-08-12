@@ -1,6 +1,6 @@
-import { messages } from "./messages";
-import colors from "colors";
 import { Configuration, OpenAIApi } from "openai";
+import { addBotMessage, messages } from "./messages.js";
+import colors from "colors";
 
 let openAi: OpenAIApi;
 export function initBot() {
@@ -17,10 +17,10 @@ export async function botAnswer() {
     model: "gpt-3.5-turbo",
     messages,
   });
+
   const answer = chatCompletion.data.choices[0].message?.content;
-  messages.push({
-    role: "assistant",
-    content: answer!,
-  });
-  console.log(colors.bold.red("Bot: ") + answer);
+
+  addBotMessage(answer!);
+
+  console.log(colors.bold.red("Bot: "), answer);
 }
